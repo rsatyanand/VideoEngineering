@@ -142,4 +142,4 @@ else:
             
         print("-----------------------\n")
 
-print("\nNgaa mihi\n")
+print("\nNgā mihi\n")
