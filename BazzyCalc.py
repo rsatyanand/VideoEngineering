@@ -60,7 +60,7 @@ else:
                 shut = 1 / (float(inshut) / eval(infps))
                 exp = frame * shut
                 if exp > frame:
-                    print("\nINVALID\nMaximum = 1/",infps)
+                    print("\nINVALID\nMaximum = 1/",eval(infps))
                     print("\n-----------------------")
                 else:
                     trig = (frame + offset - (exp / 2)) % frame
