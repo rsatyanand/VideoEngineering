@@ -24,22 +24,38 @@ else:
         inrec = input("Record speed:   ")
         if inrec == "q":
             break
+            
+        # for percentages
         elif inrec[-1] == "%":
             rec = float(inrec[:-1]) / 100
+            
+        # for fractions and decimals
         else: 
             rec = eval(inrec)
             
         inpb = input("Playback speed: ")
         if inpb == "q":
             break
+            
+        # for percentages
         elif inpb[-1] == "%":
                 pb = float(inpb[:-1]) / 100
+            
+        # for fractions and decimals
         else:
             pb = eval(inpb)
-            
+
+        
+        # the following is the central equation for converting
+        # linear time into logarithmic scale for pitch
+        # semitone = 12*log2(1/|speed|)
         recsemitones = round(12 * math.log(1 / abs(rec), 2))
         pbsemitones = round(12 * math.log(1 / abs(pb), 2))
+
         
+        # this dictionary assigns semitones to guitar
+        # intervals, in the notation used by the 
+        # EHX Pitch Fork + guitar pedal
         intervals = {
             -36 : "-3OC",
             -31 : "-P19",
@@ -101,43 +117,76 @@ else:
             36 : "3OCT"
             }
 
+        # prints the Play Speed and Cam Speed setting to
+        # use in QTakeHD (or other playout software)
         print("\nPlay Speed %:  ", round(100 * pb / rec, 2),"%")
         print("Cam Speed:     ", round(fps * rec / pb, 3),"fps\n")
 
+        
         print("Record shift: ")
         if recsemitones == 0:
             print("0\nBypass\n")
         elif recsemitones > 0:
+            # prints total number of semitones for the Lexicon MX200
             print("Up", recsemitones, "semitones")
+            
+            # for octaves + semitones notation
             print("Up", math.floor(recsemitones / 12) , "octaves," , int(recsemitones) % 12 , "semitones")
+            
+            # if more than one pitch correcting device is needed
             if recsemitones not in intervals:
                 print("Compound\n")
+                
             else:
+                # for EHX Pitch Fork + notation
                 print(intervals[recsemitones],"\n")
+                
         else:
+            # prints total number of semitones for the Lexicon MX200
             print("Down", abs(recsemitones), "semitones")
+
+            # for octaves + semitones notation
             print("Down", math.floor(abs(recsemitones) / 12) , "octaves," , int(abs(recsemitones) % 12) , "semitones")
+
+            # if more than one pitch correcting device is needed
             if recsemitones not in intervals:
                 print("Compound\n")
+                
             else:
+                # for EHX Pitch Fork + notation
                 print(intervals[recsemitones],"\n")
 
+        
         print("Playback shift: ")
         if pbsemitones == 0:
             print("0\nBypass\n")
         elif pbsemitones > 0:
+            # prints total number of semitones for the Lexicon MX200
             print("Up", pbsemitones, "semitones")
+
+            # for octaves + semitones notation
             print("Up", math.floor(pbsemitones / 12) , "octaves," , int(pbsemitones) % 12 , "semitones")
+
+            # if more than one pitch correcting device is needed
             if pbsemitones not in intervals:
                 print("Compound\n")
+                
             else:
+                # for EHX Pitch Fork + notation
                 print(intervals[pbsemitones],"\n")
         else:
+            # prints total number of semitones for the Lexicon MX200
             print("Down", abs(pbsemitones), "semitones")
+
+            # for octaves + semitones notation
             print("Down", math.floor(abs(pbsemitones) / 12) , "octaves," , int(abs(pbsemitones) % 12) , "semitones")
+
+            # if more than one pitch correcting device is needed
             if pbsemitones not in intervals:
                 print("Compound\n")
+                
             else:
+                # for EHX Pitch Fork + notation
                 print(intervals[pbsemitones],"\n")
             
         print("-----------------------\n")
