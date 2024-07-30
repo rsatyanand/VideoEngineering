@@ -1,5 +1,10 @@
 # This calculator was intended for use
-# with BazzyBro. Please run with python3
+# with BazzyBro. It recommends the amount
+# of timing delay to add to the Basler 
+# camera's shutter based on the shutter
+# speed (whether expressed as fractions
+# of a second, shutter angle or in raw 
+# microseconds). Please run with python3
 # eg python3 PATH/BazzyCalc.py
 #
 # Questions and comments to
@@ -14,7 +19,14 @@ if infps == "q":
     pass
 
 else:
+    # The total time of one frame at the project rate
+    # expressed in microseconds.
     frame = 1000000 / eval(infps)
+
+    # The offset depends on which model of Basler camera used
+    # so this value should be edited at the start of the show. 
+    # Recommend testing thoroughly with a phasebar before 
+    # shooting.
     offset = 1000
    
     option = input("Please choose an option: \n  -Angular (deg) = a \n  -Fractional (sec) = f \n  -Microseconds = m\n\n")
@@ -24,7 +36,8 @@ else:
             inshut = input("\nShutter angle:  ")
             if inshut == "q":
                 break
-            else:
+                
+            else: # convert from degrees to fraction of second
                 shut = float(inshut) / 360
                 exp = frame * shut
                 if exp > frame:
@@ -41,6 +54,7 @@ else:
             inshut = input("\nExposure time:  ")
             if inshut == "q":
                 break
+                
             else:
                 exp = float(inshut)
                 if exp > frame:
@@ -56,7 +70,8 @@ else:
             inshut = input("\nShutter speed:  1/")
             if inshut == "q":
                 break
-            else:
+                
+            else: 
                 shut = 1 / (float(inshut) / eval(infps))
                 exp = frame * shut
                 if exp > frame:
